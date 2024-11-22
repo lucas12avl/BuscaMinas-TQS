@@ -22,6 +22,8 @@ public class GestorDelJuego {
   private boolean hasGanado;
 
   public GestorDelJuego (int filas, int columnas, int minas) {
+
+
     this.tablero = new Tablero(filas, columnas, minas);
     this.interfaz = new Interfaz();
 
@@ -31,6 +33,17 @@ public class GestorDelJuego {
 
   }
   //hacen falta getters o setters?
+
+  private void procesarMovJugador(){
+    //encargaado de hacer la accion del jugador, podemos recibir un sring del tipo "1 1 flag", "2 2 revelar"
+
+
+    //en caso de que al revelar sea una mina
+
+
+  }
+
+
 
 
 }

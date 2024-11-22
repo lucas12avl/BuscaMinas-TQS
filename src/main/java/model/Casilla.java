@@ -8,14 +8,14 @@ public class Casilla {
   private boolean tieneMina;
   private boolean revelada;
   private boolean tieneBandera;
-  private int minasAdjacentes;
+  private int minasAdyacentes;
 
   //constructor
   public Casilla(){
     this.tieneMina = false;
     this.revelada = false;
     this.tieneBandera = false;
-    this.minasAdjacentes = 0;
+    this.minasAdyacentes = 0;
   }
 
 
@@ -29,8 +29,8 @@ public class Casilla {
   public boolean getTieneBandera() {
     return tieneBandera;
   }
-  public int getMinasAdjacentes() {
-    return minasAdjacentes;
+  public int getMinasAdyacentes() {
+    return minasAdyacentes;
   }
 
 
@@ -47,7 +47,7 @@ public class Casilla {
     this.tieneBandera = tieneBandera;
   }
 
-  public void setMinasAdjacentes(int minasAdjacentes) {
-    this.minasAdjacentes = minasAdjacentes;
+  public void setMinasAdyacentes(int minasAdyacentes) {
+    this.minasAdyacentes = minasAdyacentes;
   }
 }
