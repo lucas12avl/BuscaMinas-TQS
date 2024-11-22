@@ -24,10 +24,10 @@ class TableroTest {
     AssertionError thrown = assertThrows(AssertionError.class, () -> new Tablero(0,1,0)); //valor exterior frontera
     assertEquals(thrown.getMessage(), "El número de filas debe ser mayor que 0");
 
-    AssertionError thrown2 = assertThrows(AssertionError.class, () -> new Tablero(2,-2,0)); //valor exterior frontera
+    AssertionError thrown2 = assertThrows(AssertionError.class, () -> new Tablero(1,0,0)); //valor exterior frontera
     assertEquals(thrown2.getMessage(), "El número de columnas debe ser mayor que 0");
 
-    AssertionError thrown3 = assertThrows(AssertionError.class, () -> new Tablero(2,2,-2)); //valor exterior frontera
+    AssertionError thrown3 = assertThrows(AssertionError.class, () -> new Tablero(1,1,-1)); //valor exterior frontera
     assertEquals(thrown3.getMessage(), "El número de minas debe ser 0 o mayor que 0");
 
     AssertionError thrown4 = assertThrows(AssertionError.class, () -> new Tablero(2,2,8)); //valor exterior frontera
