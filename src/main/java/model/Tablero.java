@@ -32,7 +32,7 @@ public class Tablero {
     this.matriz = new Casilla [filas][columnas];
     this.generadorAleatorio = generadorAleatorio;
 
-    iniciarTablero(); //pone las Casllas dentro de cada celda de la matriz
+    iniciarTablero(); //pone las casillas dentro de cada celda de la matriz
     ponerMinas(); //ponemos las minas de forma aleatoria
 
     //postcondiciones --> que se haya inicilaizado con el total de  minas correspondientes
@@ -47,6 +47,8 @@ public class Tablero {
     }
     assert(totalMinas == minasPuestas); // hay que vigilar que tengamos todas las minas
 
+    // contamos las minas que hay al lado de una casilla vacia para que cuando esta se muestre,
+    // ensñe el numero de minas que tiene alrededor
     calcularMinasAdyacentes();
   }
 
@@ -82,16 +84,31 @@ public class Tablero {
   }
 
   private void calcularMinasAdyacentes() {
+    int[] coordFila = {-1, -1, -1, 0, 0, 1, 1, 1};
+    int[]  coordColumna = {-1, 0, 1, -1, 1, -1, 0, 1};
 
-    if (filas == 3) {
-      matriz[0][1].setMinasAdyacentes(1);
-      matriz[1][0].setMinasAdyacentes(1);
-      matriz[1][2].setMinasAdyacentes(1);
-      matriz[2][1].setMinasAdyacentes(1);
-      matriz[0][2].setMinasAdyacentes(0);
-      matriz[2][0].setMinasAdyacentes(0);
-      matriz[1][1].setMinasAdyacentes(2);
+    for (int i= 0; i<filas; i++){
+      for (int j=0; j<columnas; j++){
+        if ( matriz[i][j].getTieneMina() ){ // si encontramos una mina, buscamos sus casillas adyacentes
+          for (int z=0; z<coordFila.length; z++){
+
+            //calculamos la posicion a mirar
+            int filaRelativa = i + coordFila[z];
+            int columnaRelativa = j + coordColumna[z];
+
+            if (celdaValida(filaRelativa,columnaRelativa)) // siempre y cuando la posicion sea valida
+              if (!matriz[filaRelativa][columnaRelativa].getTieneMina()) {// y no sean una mina tambien
+                //sumamos 1
+                int minasActuales = matriz[filaRelativa][columnaRelativa].getMinasAdyacentes() + 1;
+                matriz[filaRelativa][columnaRelativa].setMinasAdyacentes(minasActuales);
+
+              }
+          }
+
+        }
+      }
     }
+
   }
 
 

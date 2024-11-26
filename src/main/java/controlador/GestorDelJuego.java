@@ -41,7 +41,6 @@ public class GestorDelJuego {
 
   private void procesarMovJugador(){
     //encargaado de hacer la accion del jugador, podemos recibir un sring del tipo "1 1 flag", "2 2 revelar"
-
     //en caso de que al revelar sea una mina
 
 
