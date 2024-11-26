@@ -1,7 +1,12 @@
 package controlador;
 
+import model.GeneradorAleatorioDefault;
 import model.Tablero;
+
+
 import vista.Interfaz;
+
+import java.util.Random;
 
 public class GestorDelJuego {
   /*
@@ -24,7 +29,7 @@ public class GestorDelJuego {
   public GestorDelJuego (int filas, int columnas, int minas) {
 
 
-    this.tablero = new Tablero(filas, columnas, minas);
+    this.tablero = new Tablero(filas, columnas, minas, new GeneradorAleatorioDefault(new Random()));
     this.interfaz = new Interfaz();
 
     this.hasGanado = false;
@@ -36,7 +41,6 @@ public class GestorDelJuego {
 
   private void procesarMovJugador(){
     //encargaado de hacer la accion del jugador, podemos recibir un sring del tipo "1 1 flag", "2 2 revelar"
-
 
     //en caso de que al revelar sea una mina
 
