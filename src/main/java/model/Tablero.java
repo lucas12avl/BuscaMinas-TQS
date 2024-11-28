@@ -13,10 +13,11 @@ public class Tablero {
   private final int filas;
   private final int columnas;
   private final int totalMinas;
+
   final Casilla[][] matriz; // representa el tablero del juego donde estan todas las casillas que puden tener o no minas
+  private final GeneradorAleatorio generadorAleatorio; // usaremos o el random de util de java o un mock para los test
 
-
-  public Tablero(int filas, int columnas, int totalMinas){
+  public Tablero(int filas, int columnas, int totalMinas, GeneradorAleatorio generadorAleatorio){
 
   //aplicamos disenño por contrato
   // las precondiciones de inicializar un tablero es que los parametros que le pasen sean validos
@@ -29,8 +30,9 @@ public class Tablero {
     this.columnas = columnas;
     this.totalMinas = totalMinas;
     this.matriz = new Casilla [filas][columnas];
+    this.generadorAleatorio = generadorAleatorio;
 
-    iniciarTablero(); //pone las Casllas dentro de cada celda de la matriz
+    iniciarTablero(); //pone las casillas dentro de cada celda de la matriz
     ponerMinas(); //ponemos las minas de forma aleatoria
 
     //postcondiciones --> que se haya inicilaizado con el total de  minas correspondientes
@@ -44,75 +46,77 @@ public class Tablero {
       }
     }
     assert(totalMinas == minasPuestas); // hay que vigilar que tengamos todas las minas
+
+    // contamos las minas que hay al lado de una casilla vacia para que cuando esta se muestre,
+    // ensñe el numero de minas que tiene alrededor
+    calcularMinasAdyacentes();
   }
-
-
-
-
 
 
 
   private void iniciarTablero() {
     // doble bucle que recorra la matriz haciendo el "new Casilla" en cada posicion para inicliazar las casillas
-
-    //TDD para la inicilizacion del tablero --> luego hay que hacerlo bien
-    if(filas==2 && columnas ==2){
-      matriz[0][0] = new Casilla();
-      matriz[0][1] = new Casilla();
-      matriz[1][0] = new Casilla();
-      matriz[1][1] = new Casilla();
+    for (int i= 0; i<filas; i++){
+      for (int j=0; j<columnas; j++){
+        matriz[i][j] = new Casilla();
+      }
     }
-
-    if(filas ==1 && columnas==1){
-      matriz[0][0] = new Casilla();
-    }
-
   }
+
   private void ponerMinas() {
     // selecciona sitios aleatorios dodne poner las minas (pone a true el esMina de la clase mina)
     // donde ponga la mina a las de al lado hay que incrementra el contador de minasAdjacentes
 
     //OBS hay que tener cuidado de que si se pone la mina en un limite, que no se ponga a buscar como mina adjacente fuera de la matriz que hace de tablero
 
-    //de momento no sera aleatorio, se pondran seguidas para hacer el TDD
-    if(this.totalMinas == 1){
-    matriz[0][0].setTieneMina(true);
+    int minasPuestas =0;
+    while (minasPuestas < totalMinas) {
+      int fila = generadorAleatorio.obtenerAleatorio(filas);
+      int columna = generadorAleatorio.obtenerAleatorio(columnas);
 
+      if(!matriz[fila][columna].getTieneMina()){ //si no habiamos colocado una mina ahí entonces colocamos una, sino, volvemos a seleccionar otro de forma aleatoria
+        matriz[fila][columna].setTieneMina(true);
+        minasPuestas++;
+
+      }
     }
-
-
-
-
 
   }
 
+  private void calcularMinasAdyacentes() {
+    int[] coordFila = {-1, -1, -1, 0, 0, 1, 1, 1};
+    int[]  coordColumna = {-1, 0, 1, -1, 1, -1, 0, 1};
+
+    for (int i= 0; i<filas; i++){
+      for (int j=0; j<columnas; j++){
+        if ( matriz[i][j].getTieneMina() ){ // si encontramos una mina, buscamos sus casillas adyacentes
+          for (int z=0; z<coordFila.length; z++){
+
+            //calculamos la posicion a mirar
+            int filaRelativa = i + coordFila[z];
+            int columnaRelativa = j + coordColumna[z];
+
+            if (celdaValida(filaRelativa,columnaRelativa)) // siempre y cuando la posicion sea valida
+              if (!matriz[filaRelativa][columnaRelativa].getTieneMina()) {// y no sean una mina tambien
+                //sumamos 1
+                int minasActuales = matriz[filaRelativa][columnaRelativa].getMinasAdyacentes() + 1;
+                matriz[filaRelativa][columnaRelativa].setMinasAdyacentes(minasActuales);
+
+              }
+          }
+
+        }
+      }
+    }
+
+  }
+
+
+
   // hay que comprobar que una celda sea valida por ejemplo cuando estamos buscando las celdas adyacentes a la mina colocada
   // para incrementarles su atributo "minasAdyacentes" (no vaya a ser que nos de por buscar una celda que no existe)
-  public boolean celdaValida(int fila, int columna){ //tdd suoniendo dos matrices [2][2] i [1][1]
-
-    if(this.filas ==1 && this.columnas == 1) {
-      if (fila == 0 && columna == 0) {
-        return true;
-      }
-
-    }
-    if(this.filas ==2 && this.columnas == 2) {
-      if (fila == 0 && columna == 0) {
-        return true;
-      }
-      if (fila == 0 && columna == 1) {
-        return true;
-      }
-      if (fila == 1 && columna == 0) {
-        return true;
-      }
-      if (fila == 1 && columna == 1) {
-        return true;
-      }
-
-    }
-    return false;
-
+  public boolean celdaValida(int fila, int columna){
+    return (fila >=0 && fila < filas) && (columna >= 0 && columna < columnas);
   }
 
   //getters
