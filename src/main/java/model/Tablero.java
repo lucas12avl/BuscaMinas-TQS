@@ -121,6 +121,7 @@ public class Tablero {
 
   //getters
   public Casilla getCasilla(int fila, int columna){
+    assert celdaValida(fila,columna):"Tiene que ser una celda válida";
     return matriz[fila][columna];
 
   }

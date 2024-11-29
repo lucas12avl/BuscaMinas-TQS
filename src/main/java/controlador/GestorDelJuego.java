@@ -23,25 +23,46 @@ public class GestorDelJuego {
 
   private final Tablero tablero;
   private final Interfaz interfaz;
-  private boolean hasPerdido;
+  private boolean finalJuego;
   private boolean hasGanado;
+  private int casillasRestantes;
 
   public GestorDelJuego (int filas, int columnas, int minas) {
 
 
     this.tablero = new Tablero(filas, columnas, minas, new GeneradorAleatorioDefault(new Random()));
     this.interfaz = new Interfaz();
-
+    this.casillasRestantes = filas + columnas;
     this.hasGanado = false;
-    this.hasPerdido = false;
+    this.finalJuego = false;
 
 
   }
-  //hacen falta getters o setters?
 
-  private void procesarMovJugador(){
-    //encargaado de hacer la accion del jugador, podemos recibir un sring del tipo "1 1 flag", "2 2 revelar"
-    //en caso de que al revelar sea una mina
+  //getters --> MAX 5
+  public Tablero getTablero(){
+    return this.tablero;
+  }
+  public boolean getFinal(){
+    return this.finalJuego;
+  }
+  public boolean getHasGanado(){return this.hasGanado;}
+  public int getCasillasRestantes(){return this.casillasRestantes;}
+
+  //Setters --> MAX 5
+
+  public void setFinalJuego(boolean finalJuego){
+    this.finalJuego = finalJuego;
+  }
+
+  public void setHasGanado(boolean hasGanado){
+    this.hasGanado = hasGanado;
+  }
+  public void setCasillasRestantes(int casillasRestantes){this.casillasRestantes = casillasRestantes;}
+
+
+  public boolean realizar_jugada(int fila, int columna, String accion){
+
 
 
   }
