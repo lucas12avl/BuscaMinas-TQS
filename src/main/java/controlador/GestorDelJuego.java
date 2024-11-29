@@ -2,6 +2,7 @@ package controlador;
 
 import model.GeneradorAleatorioDefault;
 import model.Tablero;
+import java.util.Scanner;
 
 
 import vista.Interfaz;
@@ -61,12 +62,13 @@ public class GestorDelJuego {
   public void setCasillasRestantes(int casillasRestantes){this.casillasRestantes = casillasRestantes;}
 
 
-  public boolean realizar_jugada(int fila, int columna, String accion){
-    if (fila >= 3 || fila < 0 || columna >= 3 || columna <0)
+  public boolean realizar_jugada(int fila, int col, String accion){
+    if (fila >= 3 || fila < 0 || col >= 3 || col <0)
       return false;
     else{
       switch (accion){
         case "Reveal":
+          revelarCelda(fila,col);
           return true;
         default:
           return true;
@@ -74,6 +76,12 @@ public class GestorDelJuego {
     }
 
   }
+  public void revelarCelda(int fila, int col){
+    tablero.getCasilla(fila,col).setRevelada(true);
+    this.setCasillasRestantes(this.getCasillasRestantes() - 1);
+    assert tablero.getCasilla(fila,col).getRevelada() : "Deberia estar revelada";
+  }
+
 
 
 
