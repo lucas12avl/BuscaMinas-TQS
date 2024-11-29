@@ -62,14 +62,13 @@ public class GestorDelJuego {
   public void setCasillasRestantes(int casillasRestantes){this.casillasRestantes = casillasRestantes;}
 
 
-  public boolean realizar_jugada(int fila, int col, String accion){
+  public boolean realizar_jugada(int fila, int col, int accion){
     if (fila >= 3 || fila < 0 || col >= 3 || col <0)
       return false;
     else{
       switch (accion){
-        case "Reveal":
+        case 1:
           revelarCelda(fila,col);
-          return true;
         default:
           return true;
       }
