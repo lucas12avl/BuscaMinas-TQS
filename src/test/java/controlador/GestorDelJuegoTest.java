@@ -67,7 +67,7 @@ class GestorDelJuegoTest {
     assertTrue(gestor.realizar_jugada(0, 0, 3), "No deberia tener bandera, ya que se ha quitado");
 
     //Quitar bandera de posicion no válida
-    assertTrue(gestor.realizar_jugada(-1, -1, 3), "No deberia tener bandera, ya que se ha quitado");
+    assertFalse(gestor.realizar_jugada(-1, -1, 3), "No deberia tener bandera, ya que se ha quitado");
   }
 
 

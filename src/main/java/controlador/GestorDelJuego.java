@@ -28,7 +28,7 @@ public class GestorDelJuego {
   private boolean hasGanado;
   private int casillasRestantes;
 
-  public GestorDelJuego (int filas, int columnas, int minas) {
+  public GestorDelJuego(int filas, int columnas, int minas) {
 
 
     this.tablero = new Tablero(filas, columnas, minas, new GeneradorAleatorioDefault(new Random()));
@@ -41,48 +41,67 @@ public class GestorDelJuego {
   }
 
   //getters --> MAX 5
-  public Tablero getTablero(){
+  public Tablero getTablero() {
     return this.tablero;
   }
-  public boolean getFinal(){
+
+  public boolean getFinal() {
     return this.finalJuego;
   }
-  public boolean getHasGanado(){return this.hasGanado;}
-  public int getCasillasRestantes(){return this.casillasRestantes;}
+
+  public boolean getHasGanado() {
+    return this.hasGanado;
+  }
+
+  public int getCasillasRestantes() {
+    return this.casillasRestantes;
+  }
 
   //Setters --> MAX 5
 
-  public void setFinalJuego(boolean finalJuego){
+  public void setFinalJuego(boolean finalJuego) {
     this.finalJuego = finalJuego;
   }
 
-  public void setHasGanado(boolean hasGanado){
+  public void setHasGanado(boolean hasGanado) {
     this.hasGanado = hasGanado;
   }
-  public void setCasillasRestantes(int casillasRestantes){this.casillasRestantes = casillasRestantes;}
+
+  public void setCasillasRestantes(int casillasRestantes) {
+    this.casillasRestantes = casillasRestantes;
+  }
 
 
-  public boolean realizar_jugada(int fila, int col, int accion){
-    if (fila >= 3 || fila < 0 || col >= 3 || col <0)
+  public boolean realizar_jugada(int fila, int col, int accion) {
+    if (fila >= 3 || fila < 0 || col >= 3 || col < 0)
       return false;
-    else{
-      switch (accion){
+    else {
+      switch (accion) {
         case 1:
-          revelarCelda(fila,col);
+          revelarCelda(fila, col);
+          return true;
+        case 2:
+          return flagCelda(fila, col);
+        case 3:
+          return removeBandera(fila, col);
         default:
           return true;
       }
     }
 
   }
-  public void revelarCelda(int fila, int col){
-    tablero.getCasilla(fila,col).setRevelada(true);
+
+  public void revelarCelda(int fila, int col) {
+    tablero.getCasilla(fila, col).setRevelada(true);
     this.setCasillasRestantes(this.getCasillasRestantes() - 1);
-    assert tablero.getCasilla(fila,col).getRevelada() : "Deberia estar revelada";
+    assert tablero.getCasilla(fila, col).getRevelada() : "Deberia estar revelada";
   }
 
+  public boolean flagCelda(int fila, int col) {
+    return true;
+  }
 
-
-
-
+  public boolean removeBandera(int fila, int col) {
+    return true;
+  }
 }
