@@ -62,8 +62,16 @@ public class GestorDelJuego {
 
 
   public boolean realizar_jugada(int fila, int columna, String accion){
-
-
+    if (fila >= 3 || columna >= 3)
+      return false;
+    else{
+      switch (accion){
+        case "Reveal":
+          return true;
+        default:
+          return true;
+      }
+    }
 
   }
 
