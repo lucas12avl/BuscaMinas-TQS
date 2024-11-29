@@ -7,7 +7,6 @@ dentro del propio talero para luego actualizar casillas, tambien guarda la info 
 OBS: estaria guay ponerle al usuario cuantas minas hay para que se acuerde y no ponga banderas de mas
 
 */
-
 public class Tablero {
 
   private final int filas;
@@ -70,7 +69,9 @@ public class Tablero {
     //OBS hay que tener cuidado de que si se pone la mina en un limite, que no se ponga a buscar como mina adjacente fuera de la matriz que hace de tablero
 
     int minasPuestas =0;
-    while (minasPuestas < totalMinas) {
+    int MAX_minas = getFilas() * getColumnas();
+
+    while (minasPuestas < totalMinas && minasPuestas < MAX_minas ) {
       int fila = generadorAleatorio.obtenerAleatorio(filas);
       int columna = generadorAleatorio.obtenerAleatorio(columnas);
 
@@ -84,6 +85,7 @@ public class Tablero {
   }
 
   private void calcularMinasAdyacentes() {
+
     int[] coordFila = {-1, -1, -1, 0, 0, 1, 1, 1};
     int[]  coordColumna = {-1, 0, 1, -1, 1, -1, 0, 1};
 
@@ -121,8 +123,14 @@ public class Tablero {
 
   //getters
   public Casilla getCasilla(int fila, int columna){
-    return matriz[fila][columna];
 
+    assert celdaValida(fila, columna) == true : "no se puede obtener una casilla fuera de la matriz"; //precondicion
+
+    Casilla casilla = matriz[fila][columna];
+
+    assert casilla != null : "no se debe devolver una casila null"; // postcondicion
+
+    return casilla;
   }
   public int getFilas(){
     return this.filas;
@@ -131,11 +139,5 @@ public class Tablero {
   public int getColumnas(){
     return this.columnas;
   }
-
-  public int getTotalMinas(){
-    return this.totalMinas;
-  }
-
-
 
 }
