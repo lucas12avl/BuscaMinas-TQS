@@ -62,7 +62,7 @@ public class GestorDelJuego {
 
 
   public boolean realizar_jugada(int fila, int columna, String accion){
-    if (fila >= 3 || columna >= 3)
+    if (fila >= 3 || fila < 0 || columna >= 3 || columna <0)
       return false;
     else{
       switch (accion){
