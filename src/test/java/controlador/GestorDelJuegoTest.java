@@ -28,10 +28,22 @@ class GestorDelJuegoTest {
     GestorDelJuego gestor = new GestorDelJuego(3, 3, 0);
     Tablero tablero = gestor.getTablero();
 
-
     //valor (0,0) --> Limite inferior interior
 
     assertTrue(gestor.realizar_jugada(0, 0, "Reveal"), "Casilla (0,0) debería revelarse");
+
+    //valor (2,2) --> límite superior interior
+
+    assertTrue(gestor.realizar_jugada(2, 2, "Reveal"), "Casilla (2,2) debería revelarse");
+
+    //valor (1,1) --> valor intermedio
+
+    assertTrue(gestor.realizar_jugada(1, 1, "Reveal"), "Casilla (1,1) debería revelarse");
+
+
+    //valor (-1,-1) --> límite inferior exterior
+
+    assertFalse(gestor.realizar_jugada(-1, -1, "Reveal"), "Casilla (-1,-1) no es válida");
 
     //valor (3,3) --> límite superior exterior
 
