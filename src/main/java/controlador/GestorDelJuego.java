@@ -92,6 +92,10 @@ public class GestorDelJuego {
   }
 
   public void revelarCelda(int fila, int col) {
+    if(tablero.getCasilla(fila,col).getTieneMina()){
+      System.out.println("BOOM ha estallado una mina, has perdido.");
+      this.setFinalJuego(true);
+    }
     tablero.getCasilla(fila, col).setRevelada(true);
     this.setCasillasRestantes(this.getCasillasRestantes() - 1);
     assert tablero.getCasilla(fila, col).getRevelada() : "Deberia estar revelada";
