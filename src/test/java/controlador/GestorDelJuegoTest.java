@@ -72,8 +72,15 @@ class GestorDelJuegoTest {
     //PONER BANDERA EN UNA CASILLA CON BANDERA
     assertFalse(gestor.realizar_jugada(0, 0, 2), "Casilla ya con bandera, no se debe eliminar la bandera");
 
+  }
+
+  @Test
+  void quitarBanderaTest(){
+    GestorDelJuego gestor = new GestorDelJuego(3, 3, 0);
+    Tablero tablero = gestor.getTablero();
 
     // CASO DONDE SE QUITA LA BANDERA DE UNA CASILLA CON BANDERA
+
     assertTrue(gestor.realizar_jugada(0, 0, 3), "No deberia tener bandera, ya que se ha quitado");
 
 
