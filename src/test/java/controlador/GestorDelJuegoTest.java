@@ -134,10 +134,7 @@ class GestorDelJuegoTest {
     String mockInput = "5\n5\n3\n"; //ENTRADA SIMULADA
     System.setIn(new ByteArrayInputStream(mockInput.getBytes()));
 
-
-
-    GestorDelJuego gestor = new GestorDelJuego(1, 1, 1);
-
+    GestorDelJuego gestor = new GestorDelJuego();
 
     gestor.configurarJuego();
 
@@ -149,6 +146,28 @@ class GestorDelJuegoTest {
     assertEquals(5, tablero.getFilas(), "El número de filas debería ser 5.");
     assertEquals(5, tablero.getColumnas(), "El número de columnas debería ser 5.");
     assertEquals(3, tablero.getTotalMinas(), "El número de minas debería ser 3.");
+
+
+    //ENTRADAS NO VÁLIDAS
+
+    //ENTRADAS NO NÚMERICAS
+    String input = "abc\n5\n10\n";
+    System.setIn(new ByteArrayInputStream(input.getBytes()));
+    GestorDelJuego gestor1 = new GestorDelJuego();
+
+    gestor1.configurarJuego();
+    tablero = gestor1.getTablero();
+    assertNull(tablero, "El tablero debería ser null.");
+
+
+    //ENTRADAS FUERA DE RANGO ( MAYOR A 7)
+    input = "8\n5\n10\n";
+    System.setIn(new ByteArrayInputStream(input.getBytes()));
+    GestorDelJuego gestor2 = new GestorDelJuego();
+
+    gestor2.configurarJuego();
+    tablero = gestor2.getTablero();
+    assertNull(tablero, "El tablero debería ser null porque se produjo una excepción durante la entrada.");
 
   }
 

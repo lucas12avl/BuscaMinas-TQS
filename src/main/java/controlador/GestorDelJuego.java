@@ -26,7 +26,7 @@ public class GestorDelJuego {
   private final Interfaz interfaz;
   private boolean finalJuego;
   private boolean hasGanado;
-  private int casillasRestantes;
+  private Integer casillasRestantes;
 
   public GestorDelJuego(int filas, int columnas, int minas) {
 
@@ -38,6 +38,13 @@ public class GestorDelJuego {
     this.finalJuego = false;
 
 
+  }
+  public GestorDelJuego(){
+    this.interfaz = new Interfaz();
+    this.casillasRestantes = null;
+    this.hasGanado = false;
+    this.finalJuego = false;
+    this.tablero = null;
   }
 
   //getters --> MAX 5
@@ -108,7 +115,6 @@ public class GestorDelJuego {
     interfaz.mostrarMensaje("¡Tablero configurado exitosamente con " + filas + " filas, " + columnas + " columnas y " + minas + " minas!");
   }
   public void EmpezarJuego(){
-
 
 
   }
