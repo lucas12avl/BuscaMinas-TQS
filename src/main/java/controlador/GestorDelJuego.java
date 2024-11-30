@@ -138,7 +138,7 @@ public class GestorDelJuego {
           int action = Integer.parseInt(parts[2]);
 
           if (realizar_jugada(fila, col, action)) {
-            if (casillasRestantes == tablero.getTotalMinas()) {
+            if (casillasRestantes == tablero.getTotalMinas() && !finalJuego) {
               interfaz.mostrarMensaje("¡Felicidades, has ganado!");
               hasGanado = true;
               finalJuego = true;

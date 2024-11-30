@@ -229,12 +229,12 @@ class GestorDelJuegoTest {
   @Test
   void partidaInputNoValidoTest(){
     // DEBERIA DEVOLVER MENSAJES DE ERROR
-    GestorDelJuego gestor = new GestorDelJuego();  // Creamos la instancia del GestorDelJuego
-    Interfaz mockInterface = mock(Interfaz.class);  // Mockeamos la interfaz
-    Scanner mockScan = mock(Scanner.class);  // Mockeamos el Scanner para simular entradas
+    GestorDelJuego gestor = new GestorDelJuego();
+    Interfaz mockInterface = mock(Interfaz.class);
+    Scanner mockScan = mock(Scanner.class);
 
-    gestor.setInterfaz(mockInterface);  // Configuramos el gestor para usar la interfaz mockeada
-    gestor.setScanner(mockScan);
+    gestor.setInterfaz(mockInterface);
+
 
     // Simulamos las entradas del jugador
     when(mockScan.nextLine()).thenReturn("2").thenReturn("2").thenReturn("0")
