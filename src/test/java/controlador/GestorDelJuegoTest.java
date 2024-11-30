@@ -147,33 +147,40 @@ class GestorDelJuegoTest {
     assertEquals(5, tablero.getColumnas(), "El número de columnas debería ser 5.");
     assertEquals(3, tablero.getTotalMinas(), "El número de minas debería ser 3.");
 
-
-    //ENTRADAS NO VÁLIDAS
-
-    //ENTRADAS NO NÚMERICAS
-    String input = "abc\n5\n10\n";
-    System.setIn(new ByteArrayInputStream(input.getBytes()));
-    GestorDelJuego gestor1 = new GestorDelJuego();
-
-    gestor1.configurarJuego();
-    tablero = gestor1.getTablero();
-    assertNull(tablero, "El tablero debería ser null.");
-
-
-    //ENTRADAS FUERA DE RANGO ( MAYOR A 7)
-    input = "8\n5\n10\n";
-    System.setIn(new ByteArrayInputStream(input.getBytes()));
-    GestorDelJuego gestor2 = new GestorDelJuego();
-
-    gestor2.configurarJuego();
-    tablero = gestor2.getTablero();
-    assertNull(tablero, "El tablero debería ser null porque se produjo una excepción durante la entrada.");
-
   }
 
+  //ENTRADAS NO VÁLIDAS
+   @Test
+  void  inputFueraRangoTest(){
+
+    //ENTRADAS FUERA DE RANGO ( MAYOR A 7)
+      String input = "8\n5\n10\n";
+     System.setIn(new ByteArrayInputStream(input.getBytes()));
+     GestorDelJuego gestor = new GestorDelJuego();
+
+     try {
+       gestor.configurarJuego();
+       fail("Excepción");
+     } catch (Exception e) {
+       assertNull(gestor.getTablero(), "Tablero deberia ser null");
+     }
+
+   }
+   @Test
+   void inputNoValidoConfiguracionTest(){
+
+     String mockInput = "abc\n5\n10\n";
+     System.setIn(new ByteArrayInputStream(mockInput.getBytes()));
 
 
+     GestorDelJuego gestor = new GestorDelJuego();
 
-
-
+     //Con Input no válido se queda esperando mensaje
+     try {
+       gestor.configurarJuego();
+       fail("Excepción");
+     } catch (Exception e) {
+       assertNull(gestor.getTablero(), "Tablero deberia ser null");
+     }
+   }
 }
