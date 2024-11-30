@@ -186,4 +186,8 @@ class GestorDelJuegoTest {
        assertNull(gestor.getTablero(), "Tablero deberia ser null");
      }
    }
+
+
+   //TESTS empezarJuego
+
 }
