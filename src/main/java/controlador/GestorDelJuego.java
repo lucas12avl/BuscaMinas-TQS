@@ -85,7 +85,7 @@ public class GestorDelJuego {
         case 3:
           return removeBandera(fila, col);
         default:
-          return true;
+          return false;
       }
     }
 
