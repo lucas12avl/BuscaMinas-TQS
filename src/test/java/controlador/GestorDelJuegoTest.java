@@ -12,6 +12,14 @@ import vista.Interfaz;
 import javax.swing.text.View;
 
 import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -189,5 +197,56 @@ class GestorDelJuegoTest {
 
 
    //TESTS empezarJuego
+  @Test
+  void partidaConMinaTest(){
+  //DEBERIA ACABAR EL GAME --> ESTALLARIA MINA
+  GestorDelJuego gestor = new GestorDelJuego();
+  Interfaz mockInterface = mock(Interfaz.class);
+  Scanner mockScan = mock(Scanner.class);
+  gestor.setInterfaz(mockInterface);
+  //CONFIGURAMOS EL TABLERO + REVELAR MINA
+  when(mockScan.nextLine()).thenReturn("1").thenReturn("1").thenReturn("1")
+      .thenReturn("0 0 1");
+
+  gestor.empezarJuego();
+  assertTrue(gestor.getFinal(), "Deberia ser el final del juego");
+  }
+  @Test
+  void partidaConMovimientoValidoTest(){
+    GestorDelJuego gestor = new GestorDelJuego();
+    Interfaz mockInterface = mock(Interfaz.class);
+    Scanner mockScan = mock(Scanner.class);
+    gestor.setInterfaz(mockInterface);
+
+    //CONFIGURAMOS EL TABLERO + PONER BANDERA
+    when(mockScan.nextLine()).thenReturn("2").thenReturn("2").thenReturn("1")
+        .thenReturn("0 0 3");
+
+    gestor.empezarJuego();
+    assertFalse(gestor.getFinal(), "No deberia ser el final del juego");
+  }
+
+  @Test
+  void partidaInputNoValidoTest(){
+    // DEBERIA DEVOLVER MENSAJES DE ERROR
+    GestorDelJuego gestor = new GestorDelJuego();  // Creamos la instancia del GestorDelJuego
+    Interfaz mockInterface = mock(Interfaz.class);  // Mockeamos la interfaz
+    Scanner mockScan = mock(Scanner.class);  // Mockeamos el Scanner para simular entradas
+
+    gestor.setInterfaz(mockInterface);  // Configuramos el gestor para usar la interfaz mockeada
+
+
+    // Simulamos las entradas del jugador
+    when(mockScan.nextLine()).thenReturn("2").thenReturn("2").thenReturn("0")
+        .thenReturn("x 0 1").thenReturn("3 3 0").thenReturn("2 2 1");  // La última entrada debería causar que la mina explote
+
+
+    gestor.empezarJuego();
+
+    //Verificamos que se muestra un mensaje de input no valido
+    verify(mockInterface, times(2)).mostrarMensaje("Input no válido");
+    assertTrue(gestor.getHasGanado(),"Deberia ganar al no haber minas");
+
+  }
 
 }

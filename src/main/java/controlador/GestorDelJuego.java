@@ -23,7 +23,7 @@ public class GestorDelJuego {
   */
 
   private Tablero tablero;
-  private final Interfaz interfaz;
+  private Interfaz interfaz;
   private boolean finalJuego;
   private boolean hasGanado;
   private Integer casillasRestantes;
@@ -79,6 +79,9 @@ public class GestorDelJuego {
   public void setCasillasRestantes(int casillasRestantes) {
     this.casillasRestantes = casillasRestantes;
   }
+  public void setInterfaz(Interfaz inter){
+    this.interfaz = inter;
+  }
 
   public void configurarJuego(){
     Scanner scanner = new Scanner(System.in);
@@ -114,7 +117,7 @@ public class GestorDelJuego {
     this.setTablero(new Tablero(filas, columnas, minas, new GeneradorAleatorioDefault(new Random())));
     interfaz.mostrarMensaje("¡Tablero configurado exitosamente con " + filas + " filas, " + columnas + " columnas y " + minas + " minas!");
   }
-  public void EmpezarJuego(){
+  public void empezarJuego(){
   }
 
 
