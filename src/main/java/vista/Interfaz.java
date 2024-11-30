@@ -43,4 +43,8 @@ public class Interfaz {
     _  _  _  _  _
 
   */
+
+  public void mostrarMensaje(String mensaje){
+    System.out.println(mensaje);
+  }
 }

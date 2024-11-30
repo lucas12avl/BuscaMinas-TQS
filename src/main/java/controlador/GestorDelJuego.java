@@ -22,7 +22,7 @@ public class GestorDelJuego {
 
   */
 
-  private final Tablero tablero;
+  private Tablero tablero;
   private final Interfaz interfaz;
   private boolean finalJuego;
   private boolean hasGanado;
@@ -58,7 +58,9 @@ public class GestorDelJuego {
   }
 
   //Setters --> MAX 5
-
+  public void setTablero(Tablero tablero) {
+    this.tablero = tablero;
+  }
   public void setFinalJuego(boolean finalJuego) {
     this.finalJuego = finalJuego;
   }
@@ -72,9 +74,41 @@ public class GestorDelJuego {
   }
 
   public void configurarJuego(){
+    Scanner scanner = new Scanner(System.in);
+    int filas = 0, columnas = 0, minas = 0;
 
+    interfaz.mostrarMensaje("Bienvenido al Buscaminas :)");
+    interfaz.mostrarMensaje("Vamos a configurar el tablero.");
+
+    while (true) { // Bucle que pide configuración del tablero hasta que sea válida.
+        try {
+            interfaz.mostrarMensaje("Introduce el número de filas (1-7):");
+            filas = Integer.parseInt(scanner.nextLine());
+
+            interfaz.mostrarMensaje("Introduce el número de columnas (1-7):");
+            columnas = Integer.parseInt(scanner.nextLine());
+
+            interfaz.mostrarMensaje("Introduce el número de minas (1-" + (filas * columnas) + "):");
+            minas = Integer.parseInt(scanner.nextLine());
+
+            if (filas > 0 && filas <= 7 && columnas > 0 && columnas <= 7
+                    && minas > 0 && minas <= filas * columnas) {
+                break;
+            } else {
+                interfaz.mostrarMensaje("Error: filas, columnas y minas deben estar entre 1 y 7.");
+                interfaz.mostrarMensaje("Además, las minas no pueden superar filas x columnas.");
+            }
+        } catch (NumberFormatException e) {
+            interfaz.mostrarMensaje("Error: Introduzca solo números válidos.");
+        }
+    }
+
+    // Inicializar el tablero con las dimensiones y minas proporcionadas.
+    this.setTablero(new Tablero(filas, columnas, minas, new GeneradorAleatorioDefault(new Random())));
+    interfaz.mostrarMensaje("¡Tablero configurado exitosamente con " + filas + " filas, " + columnas + " columnas y " + minas + " minas!");
   }
   public void EmpezarJuego(){
+
 
 
   }
