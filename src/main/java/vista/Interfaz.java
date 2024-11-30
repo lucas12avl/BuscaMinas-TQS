@@ -8,6 +8,8 @@ OBS: hacerle saber al jugador que ha perdido o ha ganado cuando ocurra
 
 */
 
+import model.Tablero;
+import model.Casilla;
 public class Interfaz {
 
 
@@ -46,5 +48,28 @@ public class Interfaz {
 
   public void mostrarMensaje(String mensaje){
     System.out.println(mensaje);
+  }
+
+  public void mostrarTablero(Tablero tablero) {
+    System.out.println("\nTablero:");
+    for (int fila = 0; fila < tablero.getFilas(); fila++) {
+        for (int columna = 0; columna < tablero.getColumnas(); columna++) {
+            Casilla casilla = tablero.getCasilla(fila, columna);
+
+            if (casilla.getRevelada()) {
+                if (casilla.getTieneMina()) {
+                    System.out.print(" * ");
+                } else {
+                    System.out.print(" " + casilla.getMinasAdyacentes() + " ");
+                }
+            } else if (casilla.getTieneBandera()) {
+                System.out.print(" F ");
+            } else {
+                System.out.print(" . ");
+            }
+        }
+        System.out.println();
+    }
+
   }
 }
