@@ -49,6 +49,9 @@ class GestorDelJuegoTest {
 
     assertFalse(gestor.realizar_jugada(3, 3, 1), "Casilla (3,3) no es válida");
 
+    //Revelar una casilla ya revelada
+    assertFalse(gestor.realizar_jugada(1, 1,1), "Casilla ya está revelada");
+
   }
 
   //MOVIMIENTO --> FLAGGING y Rflagging (2 y 3)
