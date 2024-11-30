@@ -118,6 +118,7 @@ public class GestorDelJuego {
     interfaz.mostrarMensaje("¡Tablero configurado exitosamente con " + filas + " filas, " + columnas + " columnas y " + minas + " minas!");
   }
   public void empezarJuego(){
+
   }
 
 

@@ -238,13 +238,14 @@ class GestorDelJuegoTest {
 
     // Simulamos las entradas del jugador
     when(mockScan.nextLine()).thenReturn("2").thenReturn("2").thenReturn("0")
-        .thenReturn("x 0 1").thenReturn("3 3 0").thenReturn("2 2 1");  // La última entrada debería causar que la mina explote
+        .thenReturn("x 0 1").thenReturn("3 3 0 0").thenReturn("2 2 1");  // La última entrada debería causar que la mina explote
 
 
     gestor.empezarJuego();
 
     //Verificamos que se muestra un mensaje de input no valido
     verify(mockInterface, times(2)).mostrarMensaje("Input no válido");
+    verify(mockInterface, times(2)).mostrarMensaje("Formato no válido");
     assertTrue(gestor.getHasGanado(),"Deberia ganar al no haber minas");
 
   }
