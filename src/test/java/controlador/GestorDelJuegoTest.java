@@ -117,7 +117,18 @@ class GestorDelJuegoTest {
     assertTrue(gestor.getFinal(), "Si se descubre una mina el juego se acaba");
 
   }
+  //######## TESTS RELACIONADOS CON EL FLUJO DEL JUEGO #######################
+  @Test
+  //deberia mostrar por pantalla un mensaje para introducir la jugada + repetir hasta fin del juego
+  //deberiamos hacer el statment coverage y loop testing
 
+  void gestionJuegoTest(){
+
+    //Comprobar que si se gana acaba el juego
+
+    //comprobar que si se revela una mina se acaba el juego
+
+  }
 
 
 

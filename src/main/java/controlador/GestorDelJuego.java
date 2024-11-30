@@ -72,58 +72,86 @@ public class GestorDelJuego {
   }
 
 
-  public boolean realizar_jugada(int fila, int col, int accion) {
-    if (fila >= 3 || fila < 0 || col >= 3 || col < 0)
+  public boolean realizar_jugada(int fila, int col, int jugada){
+
+    //Diseño por contrato --> Condiciones necesarias para relaizar la jugada
+    assert fila > -1 : "Fila tiene que ser superior o igual a 0";
+    assert fila < tablero.getFilas() : "La fila no puede sobrepasar el tablero";
+    assert col > -1 : "Columna tiene que ser igual o superior a 0";
+    assert col < tablero.getColumnas() : "La columna no puede sobrepasar el tablero";
+
+    if(fila < 0 || fila >= tablero.getFilas() || col < 0 || col >= tablero.getColumnas())
       return false;
-    else {
-      switch (accion) {
+    else{
+      //Habrá que comprobar también el tipo de jugada --> Para futuros test
+
+      switch (jugada){
         case 1:
-          revelarCelda(fila, col);
+          revelarCelda(fila,col);
           return true;
         case 2:
-          return flagCelda(fila, col);
+          return flagCelda(fila,col);
         case 3:
-          return removeBandera(fila, col);
+          return removeBandera(fila,col);
         default:
           return false;
+
       }
     }
 
   }
 
-  public void revelarCelda(int fila, int col) {
+  public void revelarCelda(int fila, int col){
+
+    //Las precondiciones se evaluan antes del switchcase --> Por tanto aquí no hay
     if(tablero.getCasilla(fila,col).getTieneMina()){
       System.out.println("BOOM ha estallado una mina, has perdido.");
       this.setFinalJuego(true);
+      //postcondicion
+      assert tablero.getCasilla(fila,col).getRevelada() : "Deberia revelarse la mina";
+
     }
-    tablero.getCasilla(fila, col).setRevelada(true);
+    tablero.getCasilla(fila,col).setRevelada(true);
     this.setCasillasRestantes(this.getCasillasRestantes() - 1);
-    assert tablero.getCasilla(fila, col).getRevelada() : "Deberia estar revelada";
+    //postcondiciones
+    assert tablero.getCasilla(fila,col).getRevelada() : "Deberia estar revelada";
   }
 
-  public boolean flagCelda(int fila, int col) {
+  public boolean flagCelda(int fila, int col){
 
-    //Miramos que no esté reveladala casilla ni que tenga bandera
+    //Diseño por contrato --> Precondiciones para poner una bandera
+    assert tablero.getCasilla(fila,col).getRevelada() : "Si la casilla está revelada no se puede poner una Bandera.";
+    assert tablero.getCasilla(fila,col).getTieneBandera():"Si la casilla tiene bandera no se puede poner otra bandera.";
+
     if(tablero.getCasilla(fila,col).getRevelada() || tablero.getCasilla(fila,col).getTieneBandera())
       return false;
-    else {
-      tablero.getCasilla(fila, col).setTieneBandera(true);
+    else{
+      tablero.getCasilla(fila,col).setTieneBandera(true);
       //Si ponemos una flag --> Se quita esa casilla de casillas restantes
       this.setCasillasRestantes(this.getCasillasRestantes() - 1);
+      //Postcondicion del método de colocar una bandera --> debe mirar si se ha colocado bien la bandera
+      assert tablero.getCasilla(fila,col).getTieneBandera() : "Se deberia haber colocado la bandera correctamente";
       return true;
+
     }
+
   }
 
   public boolean removeBandera(int fila, int col) {
+    //Diseño por contrato --> Precondiciones para quitar una badera
+    //Falta condicion en el test --> Mirar despues
+    //Precondiciones
+    assert tablero.getCasilla(fila, col).getRevelada() : " Si la casilla está revelada no se puede quitar una bandera";
+    assert !tablero.getCasilla(fila, col).getTieneBandera() : "NO se puede quitar bandera, no hay ninguna en esta casilla";
 
-    //Si la casilla no tiene bandera -->
-    if (!tablero.getCasilla(fila, col).getTieneBandera() || tablero.getCasilla(fila,col).getRevelada()){
+    if (!tablero.getCasilla(fila, col).getTieneBandera()) {
       return false;
-    }
-    else{
-      tablero.getCasilla(fila,col).setTieneBandera(false);
+    } else {
+      tablero.getCasilla(fila, col).setTieneBandera(false);
       //si quitamos la bandera --> Se suma una a las casillas restantes
-      this.setCasillasRestantes(this.getCasillasRestantes()+1);
+      this.setCasillasRestantes(this.getCasillasRestantes() + 1);
+      //Postcondicion del método de remover la bandera
+      assert tablero.getCasilla(fila, col).getTieneBandera() : "Bandera deberia estar eliminada --> Funciona bien la funcion";
 
       return true;
     }
