@@ -13,6 +13,10 @@ import javax.swing.text.View;
 
 import static org.mockito.Mockito.*;
 
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
+import java.io.ByteArrayInputStream;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -125,13 +129,26 @@ class GestorDelJuegoTest {
   //deberia mostrar por pantalla un mensaje para introducir la jugada + repetir hasta fin del juego
   //deberiamos hacer el statment coverage y loop testing
 
-  void gestionJuegoTest(){
+  void configuracionJuegotest(){
+    //MOCK DE ENTRADA
+    String simulatedInput = "5\n5\n3\n"; //ENTRADA SIMULADA
+    System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
 
-    //Comprobar que si se gana acaba el juego
+    GestorDelJuego gestor = new GestorDelJuego(1, 1, 1);
 
-    //comprobar que si se revela una mina se acaba el juego
 
+    gestor.configurarJuego();
+
+    // Coger tablero para coprobaciones
+    Tablero tablero = gestor.getTablero();
+
+    // Comprobaciones
+    assertNotNull(tablero, "El tablero no debería ser null después de configurar el juego.");
+    assertEquals(5, tablero.getFilas(), "El número de filas debería ser 5.");
+    assertEquals(5, tablero.getColumnas(), "El número de columnas debería ser 5.");
+    assertEquals(3, tablero.getTotalMinas(), "El número de minas debería ser 3.");
   }
+
 
 
 

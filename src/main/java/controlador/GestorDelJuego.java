@@ -33,7 +33,7 @@ public class GestorDelJuego {
 
     this.tablero = new Tablero(filas, columnas, minas, new GeneradorAleatorioDefault(new Random()));
     this.interfaz = new Interfaz();
-    this.casillasRestantes = filas + columnas;
+    this.casillasRestantes = filas * columnas;
     this.hasGanado = false;
     this.finalJuego = false;
 
@@ -69,6 +69,14 @@ public class GestorDelJuego {
 
   public void setCasillasRestantes(int casillasRestantes) {
     this.casillasRestantes = casillasRestantes;
+  }
+
+  public void configurarJuego(){
+
+  }
+  public void EmpezarJuego(){
+
+
   }
 
 
@@ -117,7 +125,6 @@ public class GestorDelJuego {
 
     //postcondiciones
     assert tablero.getCasilla(fila,col).getRevelada() : "Deberia estar revelada";
-
     return true;
   }
 
