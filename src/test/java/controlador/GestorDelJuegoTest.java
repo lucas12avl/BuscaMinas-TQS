@@ -131,8 +131,10 @@ class GestorDelJuegoTest {
 
   void configuracionJuegotest(){
     //MOCK DE ENTRADA
-    String simulatedInput = "5\n5\n3\n"; //ENTRADA SIMULADA
-    System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+    String mockInput = "5\n5\n3\n"; //ENTRADA SIMULADA
+    System.setIn(new ByteArrayInputStream(mockInput.getBytes()));
+
+
 
     GestorDelJuego gestor = new GestorDelJuego(1, 1, 1);
 
@@ -147,6 +149,7 @@ class GestorDelJuegoTest {
     assertEquals(5, tablero.getFilas(), "El número de filas debería ser 5.");
     assertEquals(5, tablero.getColumnas(), "El número de columnas debería ser 5.");
     assertEquals(3, tablero.getTotalMinas(), "El número de minas debería ser 3.");
+
   }
 
 
