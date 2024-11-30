@@ -121,7 +121,6 @@ public class GestorDelJuego {
     interfaz.mostrarMensaje("¡Tablero configurado exitosamente con " + filas + " filas, " + columnas + " columnas y " + minas + " minas!");
   }
   public void empezarJuego(){
-    configurarJuego();
     Scanner scanner = new Scanner(System.in);
     interfaz.mostrarMensaje("Introduce tu movimiento en el formato: fila columna acción (1=Revelar, 2=Poner bandera, 3=Quitar bandera)");
 
