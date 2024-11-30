@@ -87,9 +87,23 @@ class GestorDelJuegoTest {
     assertFalse(gestor.realizar_jugada(-1, -1, 3), "No deberia tener bandera, ya que se ha quitado");
   }
 
+  @Test
+  void movimientoNoValidoTest(){
+    GestorDelJuego gestor = new GestorDelJuego(3, 3, 0);
+    Tablero tablero = gestor.getTablero();
 
 
+    //jugada no válida límite superior
+    assertFalse( gestor.realizar_jugada(0, 0, 4), "Jugada 4 no existe");
 
-
+    //jugada no válida límite inferior
+    assertFalse( gestor.realizar_jugada(0, 0, 0), "Jugada 0 no existe");
 
   }
+
+
+
+
+
+
+}
