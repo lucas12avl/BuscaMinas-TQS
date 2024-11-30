@@ -125,6 +125,9 @@ class GestorDelJuegoTest {
 
   }
   //######## TESTS RELACIONADOS CON EL FLUJO DEL JUEGO #######################
+
+
+  //SE HACE COVERAGE DEL METODO configuarcionJuego
   @Test
   //deberia mostrar por pantalla un mensaje para introducir la jugada + repetir hasta fin del juego
   //deberiamos hacer el statment coverage y loop testing
