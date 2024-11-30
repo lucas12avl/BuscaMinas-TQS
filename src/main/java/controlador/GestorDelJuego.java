@@ -87,8 +87,7 @@ public class GestorDelJuego {
 
       switch (jugada){
         case 1:
-          revelarCelda(fila,col);
-          return true;
+          return revelarCelda(fila,col);
         case 2:
           return flagCelda(fila,col);
         case 3:
@@ -101,20 +100,24 @@ public class GestorDelJuego {
 
   }
 
-  public void revelarCelda(int fila, int col){
+  public boolean revelarCelda(int fila, int col){
 
-    //Las precondiciones se evaluan antes del switchcase --> Por tanto aquí no hay
+    //Las precondiciones se evaluan antes del switchcase
+    //Precondición
+    assert tablero.getCasilla(fila,col).getRevelada() : "Casilla ya revelada.";
+    if(tablero.getCasilla(fila,col).getRevelada())
+      return false;
     if(tablero.getCasilla(fila,col).getTieneMina()){
       System.out.println("BOOM ha estallado una mina, has perdido.");
       this.setFinalJuego(true);
       //postcondicion
       assert tablero.getCasilla(fila,col).getRevelada() : "Deberia revelarse la mina";
-
     }
     tablero.getCasilla(fila,col).setRevelada(true);
     this.setCasillasRestantes(this.getCasillasRestantes() - 1);
     //postcondiciones
     assert tablero.getCasilla(fila,col).getRevelada() : "Deberia estar revelada";
+    return true;
   }
 
   public boolean flagCelda(int fila, int col){
