@@ -234,7 +234,7 @@ class GestorDelJuegoTest {
     Scanner mockScan = mock(Scanner.class);  // Mockeamos el Scanner para simular entradas
 
     gestor.setInterfaz(mockInterface);  // Configuramos el gestor para usar la interfaz mockeada
-
+    gestor.setScanner(mockScan);
 
     // Simulamos las entradas del jugador
     when(mockScan.nextLine()).thenReturn("2").thenReturn("2").thenReturn("0")
@@ -244,8 +244,8 @@ class GestorDelJuegoTest {
     gestor.empezarJuego();
 
     //Verificamos que se muestra un mensaje de input no valido
-    verify(mockInterface, times(2)).mostrarMensaje("Input no válido");
-    verify(mockInterface, times(2)).mostrarMensaje("Formato no válido");
+    verify(mockInterface).mostrarMensaje("Error: Introduce números válidos.");
+    verify(mockInterface).mostrarMensaje("Formato incorrecto. Usa: fila columna acción.");
     assertTrue(gestor.getHasGanado(),"Deberia ganar al no haber minas");
 
   }

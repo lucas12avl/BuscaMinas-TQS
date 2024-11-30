@@ -28,6 +28,7 @@ public class GestorDelJuego {
   private boolean hasGanado;
   private Integer casillasRestantes;
 
+
   public GestorDelJuego(int filas, int columnas, int minas) {
 
 
@@ -45,6 +46,7 @@ public class GestorDelJuego {
     this.hasGanado = false;
     this.finalJuego = false;
     this.tablero = null;
+
   }
 
   //getters --> MAX 5
@@ -115,11 +117,43 @@ public class GestorDelJuego {
 
     // Inicializar el tablero con las dimensiones y minas proporcionadas.
     this.setTablero(new Tablero(filas, columnas, minas, new GeneradorAleatorioDefault(new Random())));
+    this.setCasillasRestantes(filas*columnas);
     interfaz.mostrarMensaje("¡Tablero configurado exitosamente con " + filas + " filas, " + columnas + " columnas y " + minas + " minas!");
   }
   public void empezarJuego(){
+    configurarJuego();
+    Scanner scanner = new Scanner(System.in);
+    interfaz.mostrarMensaje("Introduce tu movimiento en el formato: fila columna acción (1=Revelar, 2=Poner bandera, 3=Quitar bandera)");
 
+    while (!finalJuego) {
+      interfaz.mostrarTablero(tablero);
+
+      String input = scanner.nextLine();
+      String[] parts = input.split(" ");
+
+      if (parts.length == 3) {
+        try {
+          int fila = Integer.parseInt(parts[0]);
+          int col = Integer.parseInt(parts[1]);
+          int action = Integer.parseInt(parts[2]);
+
+          if (realizar_jugada(fila, col, action)) {
+            if (casillasRestantes == tablero.getTotalMinas()) {
+              interfaz.mostrarMensaje("¡Felicidades, has ganado!");
+              hasGanado = true;
+              finalJuego = true;
+              return;
+            }
+          }
+        } catch (NumberFormatException e) {
+          interfaz.mostrarMensaje("Error: Introduce números válidos.");
+        }
+      } else {
+        interfaz.mostrarMensaje("Formato incorrecto. Usa: fila columna acción.");
+      }
+    }
   }
+
 
 
   public boolean realizar_jugada(int fila, int col, int jugada){
@@ -161,6 +195,7 @@ public class GestorDelJuego {
       this.setFinalJuego(true);
       //postcondicion
       assert tablero.getCasilla(fila,col).getRevelada() : "Deberia revelarse la mina";
+      return true;
     }
     tablero.getCasilla(fila,col).setRevelada(true);
     this.setCasillasRestantes(this.getCasillasRestantes() - 1);
