@@ -111,6 +111,17 @@ public class GestorDelJuego {
   }
 
   public boolean removeBandera(int fila, int col) {
-    return true;
+
+    //Si la casilla no tiene bandera -->
+    if (!tablero.getCasilla(fila, col).getTieneBandera() || tablero.getCasilla(fila,col).getRevelada()){
+      return false;
+    }
+    else{
+      tablero.getCasilla(fila,col).setTieneBandera(false);
+      //si quitamos la bandera --> Se suma una a las casillas restantes
+      this.setCasillasRestantes(this.getCasillasRestantes()+1);
+
+      return true;
+    }
   }
 }
