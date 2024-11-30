@@ -108,6 +108,16 @@ class GestorDelJuegoTest {
 
   }
 
+  @Test
+  void detectarMinaTest() {
+    GestorDelJuego gestor = new GestorDelJuego(1, 1, 1);
+    Tablero tablero = gestor.getTablero();
+
+    gestor.realizar_jugada(0, 0, 1);
+    assertTrue(gestor.getFinal(), "Si se descubre una mina el juego se acaba");
+
+  }
+
 
 
 
