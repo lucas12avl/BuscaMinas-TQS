@@ -11,6 +11,7 @@ class TableroTest {
     @Test
   void iniciarClaseTableroTest(){
 
+    // con este primer test conseguimos un statment y path coverage del metodo inicializarMatrizTablero()
     int[] posMinas = {0,0}; //da igual, porque no se van a poner minas en este test
     Tablero tablero = new Tablero(2,2,0, new GeneradorAleatorioMock(posMinas)); //valor interior frontera (válido)
     assertEquals(2, tablero.getFilas());
@@ -35,6 +36,8 @@ class TableroTest {
 
 
   }
+
+
 
   @Test
   void celdaValidaTest () {
@@ -210,7 +213,7 @@ class TableroTest {
 
 
   @Test
-  void calcularMinasAdyacentesTest(){ // consigue statment coverage i path coverage ya que pasa por todas las sentencias, y ademas recorre todos los caminos consiguiendo así path coverage
+  void calcularMinasAdyacentesTest(){ // consigue statment coverage i path coverage ya que pasa por todas las sentencias, y ademas recorre todos los caminos
 
     int[] posMinas = {0, 0, 2, 2, 2, 1};
     Tablero tablero = new Tablero(3,3,3, new GeneradorAleatorioMock(posMinas));

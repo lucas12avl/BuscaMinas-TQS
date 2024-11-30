@@ -31,7 +31,7 @@ public class Tablero {
     this.matriz = new Casilla [filas][columnas];
     this.generadorAleatorio = generadorAleatorio;
 
-    iniciarTablero(); //pone las casillas dentro de cada celda de la matriz
+    inicializarMatrizTablero(); //pone las casillas dentro de cada celda de la matriz
     ponerMinas(); //ponemos las minas de forma aleatoria
 
     //postcondiciones --> que se haya inicilaizado con el total de  minas correspondientes
@@ -53,7 +53,7 @@ public class Tablero {
 
 
 
-  private void iniciarTablero() {
+  private void inicializarMatrizTablero() {
     // doble bucle que recorra la matriz haciendo el "new Casilla" en cada posicion para inicliazar las casillas
     for (int i= 0; i<filas; i++){
       for (int j=0; j<columnas; j++){
@@ -110,6 +110,7 @@ public class Tablero {
         }
       }
     }
+    assert matriz != null : "La matriz no debe ser modificada ni sobrescrita";
 
   }
 
@@ -133,7 +134,7 @@ public class Tablero {
     return casilla;
   }
   public int getFilas(){
-    return this.filas;
+    return filas;
   }
 
   public int getColumnas(){
