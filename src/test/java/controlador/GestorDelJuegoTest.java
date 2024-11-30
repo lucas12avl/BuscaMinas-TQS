@@ -80,7 +80,7 @@ class GestorDelJuegoTest {
     Tablero tablero = gestor.getTablero();
 
     // CASO DONDE SE QUITA LA BANDERA DE UNA CASILLA CON BANDERA
-
+    gestor.realizar_jugada(0,0,2);
     assertTrue(gestor.realizar_jugada(0, 0, 3), "No deberia tener bandera, ya que se ha quitado");
 
 
