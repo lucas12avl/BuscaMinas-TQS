@@ -98,7 +98,16 @@ public class GestorDelJuego {
   }
 
   public boolean flagCelda(int fila, int col) {
-    return true;
+
+    //Miramos que no esté reveladala casilla ni que tenga bandera
+    if(tablero.getCasilla(fila,col).getRevelada() || tablero.getCasilla(fila,col).getTieneBandera())
+      return false;
+    else {
+      tablero.getCasilla(fila, col).setTieneBandera(true);
+      //Si ponemos una flag --> Se quita esa casilla de casillas restantes
+      this.setCasillasRestantes(this.getCasillasRestantes() - 1);
+      return true;
+    }
   }
 
   public boolean removeBandera(int fila, int col) {
