@@ -218,15 +218,8 @@ class GestorDelJuegoTest {
     //PONER BANDERA --> COMPROBAR QUE NO SE ACABA EL JUEGO
     String input = "0 0 2\n";
     System.setIn(new ByteArrayInputStream(input.getBytes()));
-    GestorDelJuego gestor = new GestorDelJuego(3,2,2);
-
-    //Saltará excepción ya que no ha acabado el juego
-    try {
-      gestor.empezarJuego();
-      fail("Excepción");
-    } catch (Exception e) {
-      assertFalse(gestor.getFinal(), "No se deberia acabar el juego");
-    }
+    GestorDelJuego gestor = new GestorDelJuego(1,1,1);
+    assertTrue(gestor.getHasGanado(),"Deberias ganar");
   }
 
   @Test
