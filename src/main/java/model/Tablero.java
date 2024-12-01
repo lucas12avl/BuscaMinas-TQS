@@ -141,4 +141,6 @@ public class Tablero {
     return this.columnas;
   }
 
+  public int getTotalMinas(){return this.totalMinas;}
+
 }
