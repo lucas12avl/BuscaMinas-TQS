@@ -137,7 +137,7 @@ public class GestorDelJuego {
           int action = Integer.parseInt(parts[2]);
 
           if (realizar_jugada(fila, col, action)) {
-            if (casillasRestantes == tablero.getTotalMinas() && !finalJuego) {
+            if (casillasRestantes <= tablero.getTotalMinas() && !finalJuego) {
               interfaz.mostrarMensaje("¡Felicidades, has ganado!");
               hasGanado = true;
               finalJuego = true;
@@ -215,8 +215,15 @@ public class GestorDelJuego {
     else{
       tablero.getCasilla(fila,col).setTieneBandera(true);
       //Si ponemos una flag --> Se quita esa casilla de casillas restantes
-      if(tablero.getCasilla(fila,col).getTieneMina())
+      if(this.getTablero().getCasilla(fila,col).getTieneMina()){
         this.setCasillasRestantes(this.getCasillasRestantes() - 1);
+        if(this.getCasillasRestantes() == getTablero().getTotalMinas()){
+          this.setFinalJuego(true);
+          this.setHasGanado(true);
+          return true;
+        }
+
+      }
       //Postcondicion del método de colocar una bandera --> debe mirar si se ha colocado bien la bandera
       assert tablero.getCasilla(fila,col).getTieneBandera() : "Se deberia haber colocado la bandera correctamente";
       return true;

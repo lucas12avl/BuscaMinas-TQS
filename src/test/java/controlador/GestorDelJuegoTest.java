@@ -1,41 +1,15 @@
 package controlador;
-import model.Casilla;
 import model.Tablero;
-import org.junit.jupiter.api.Test;
-import java.util.Scanner; //Escaner para entrada de user
-
-import java.util.InputMismatchException; //Hacer saltar la excepción de input
-
-import org.mockito.Mockito;
 import vista.Interfaz;
 
-import javax.swing.text.View;
-
-import static org.mockito.Mockito.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-
 import org.junit.jupiter.api.Test;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.PrintStream;
-
-
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-import java.io.ByteArrayInputStream;
-
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class GestorDelJuegoTest {
 
@@ -215,10 +189,12 @@ class GestorDelJuegoTest {
   }
   @Test
   void partidaConMovimientoValidoTest(){
-    //PONER BANDERA --> COMPROBAR QUE NO SE ACABA EL JUEGO
+    //REVELAR CASILLA --> COMPROBAR QUE SE ACABA EL JUEGO
     String input = "0 0 2\n";
     System.setIn(new ByteArrayInputStream(input.getBytes()));
     GestorDelJuego gestor = new GestorDelJuego(1,1,1);
+
+    gestor.empezarJuego();
     assertTrue(gestor.getHasGanado(),"Deberias ganar");
   }
 
