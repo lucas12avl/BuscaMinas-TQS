@@ -39,7 +39,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GestorDelJuegoTest {
 
-  //PROVES CAIXA NEGRA
+
   // ######### TESTS RELACIONADOS CON LOS MOVIMIENTOS DEL JUGADOR #########
   @Test
   void revelarMovimientoTest(){
@@ -146,9 +146,6 @@ class GestorDelJuegoTest {
 
   //SE HACE COVERAGE DEL METODO configuarcionJuego
   @Test
-  //deberia mostrar por pantalla un mensaje para introducir la jugada + repetir hasta fin del juego
-  //deberiamos hacer el statment coverage y loop testing
-
   void configuracionJuegotest(){
     //MOCK DE ENTRADA
     String mockInput = "5\n5\n3\n"; //ENTRADA SIMULADA
@@ -225,16 +222,54 @@ class GestorDelJuegoTest {
 
     //Saltará excepción ya que no ha acabado el juego
     try {
-      gestor.configurarJuego();
+      gestor.empezarJuego();
       fail("Excepción");
     } catch (Exception e) {
-      assertFalse(gestor.getFinal(), "Tablero deberia ser null");
+      assertFalse(gestor.getFinal(), "No se deberia acabar el juego");
     }
   }
 
   @Test
   void partidaInputNoValidoTest(){
+    //MOCK con MOCKITO
+    Interfaz mockInterfaz = mock(Interfaz.class);
 
+    String input = "x 0 2\n";
+    System.setIn(new ByteArrayInputStream(input.getBytes()));
+
+
+    GestorDelJuego gestor = new GestorDelJuego(3,2,2);
+    gestor.setInterfaz(mockInterfaz);
+
+    //SE EJECUTA HASTA QUE TE DICE QUE EL INPU CONTIENE DATOS NO VALIDOS
+    try {
+      gestor.empezarJuego();
+      fail("Excepción");
+    } catch (Exception e) {
+      verify(mockInterfaz).mostrarMensaje("Error: Introduce números válidos.");
+    }
+
+  }
+
+  @Test
+  void partidaMalFormatoTest(){
+
+    //MOCK con MOCKITO
+    Interfaz mockInterfaz = mock(Interfaz.class);
+    //ENTRADA DE DATOS
+    String input = "0 0 2 0 \n";
+    System.setIn(new ByteArrayInputStream(input.getBytes()));
+    //CREAMOS EL GETSOR DEL JUEGO
+    GestorDelJuego gestor = new GestorDelJuego(3,2,2);
+    gestor.setInterfaz(mockInterfaz);
+
+    //SE EJECUTA HASTA QUE SALTA EL ERROR DE MAL FORMATO
+    try {
+      gestor.empezarJuego();
+      fail("Excepción");
+    } catch (Exception e) {
+      verify(mockInterfaz).mostrarMensaje("Formato incorrecto. Usa: fila columna acción.");
+    }
 
   }
 

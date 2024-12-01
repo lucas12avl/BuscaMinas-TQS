@@ -215,7 +215,8 @@ public class GestorDelJuego {
     else{
       tablero.getCasilla(fila,col).setTieneBandera(true);
       //Si ponemos una flag --> Se quita esa casilla de casillas restantes
-      this.setCasillasRestantes(this.getCasillasRestantes() - 1);
+      if(tablero.getCasilla(fila,col).getTieneMina())
+        this.setCasillasRestantes(this.getCasillasRestantes() - 1);
       //Postcondicion del método de colocar una bandera --> debe mirar si se ha colocado bien la bandera
       assert tablero.getCasilla(fila,col).getTieneBandera() : "Se deberia haber colocado la bandera correctamente";
       return true;
