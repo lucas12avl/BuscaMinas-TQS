@@ -105,7 +105,7 @@ public class GestorDelJuego {
                 interfaz.mostrarMensaje("Error: filas, columnas y minas deben estar entre 1 y 7.");
                 interfaz.mostrarMensaje("Además, las minas no pueden superar filas x columnas.");
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException e) { //Si se entran parametros no válidos
             interfaz.mostrarMensaje("Error: Introduzca solo números válidos.");
         }
     }
@@ -118,7 +118,7 @@ public class GestorDelJuego {
   public void empezarJuego(){
     Scanner scanner = new Scanner(System.in);
     interfaz.mostrarMensaje("Introduce tu movimiento en el formato: fila columna acción (1=Revelar, 2=Poner bandera, 3=Quitar bandera)");
-
+    //Bucle del juego --> No acaba hasta que se acabe le juego
     while (!finalJuego) {
       interfaz.mostrarTablero(tablero);
 
@@ -133,6 +133,7 @@ public class GestorDelJuego {
           int action = Integer.parseInt(parts[2]);
 
           if (realizar_jugada(fila, col, action)) {
+            //Este if nos ayuda en caso de que estalle una mina al revelar --> Evita que salga el mensaje de victoria
             if (casillasRestantes <= tablero.getTotalMinas() && !finalJuego) {
               interfaz.mostrarMensaje("¡Felicidades, has ganado!");
               hasGanado = true;
@@ -155,6 +156,7 @@ public class GestorDelJuego {
     if(fila < 0 || fila >= tablero.getFilas() || col < 0 || col >= tablero.getColumnas())
       return false;
     else{
+      //SWITCH DE LAS JUAGADAS --> True si se ha podido realizar --> False si no.
       switch (jugada){
         case 1:
           return revelarCelda(fila,col);
@@ -173,19 +175,20 @@ public class GestorDelJuego {
 
     if(tablero.getCasilla(fila,col).getRevelada())
       return false;
-
+    //CASO DE REVELAR UNA MINA
     if(tablero.getCasilla(fila,col).getTieneMina()){
       System.out.println("BOOM ha estallado una mina, has perdido.");
       this.setFinalJuego(true);
       return true;
     }
     tablero.getCasilla(fila,col).setRevelada(true);
+    //Si una casilla se revela --> Una menos para la victoria
     this.setCasillasRestantes(this.getCasillasRestantes() - 1);
     return true;
   }
 
   public boolean flagCelda(int fila, int col){
-
+    //No podemos poner flags si la casilla esta revelada o ya tiene una flag
     if(tablero.getCasilla(fila,col).getRevelada() || tablero.getCasilla(fila,col).getTieneBandera())
       return false;
     else{
@@ -199,12 +202,12 @@ public class GestorDelJuego {
   }
 
   public boolean removeBandera(int fila, int col) {
-
+    //Tiene que tener bandera para quitarla
     if (!tablero.getCasilla(fila, col).getTieneBandera()) {
       return false;
     } else {
       tablero.getCasilla(fila, col).setTieneBandera(false);
-      //si quitamos la bandera y tenia mina --> Se suma una a las casillas restantes -->
+      //si quitamos la bandera y tenia mina --> Se suma una a las casillas restantes
       if(tablero.getCasilla(fila,col).getTieneMina())
         this.setCasillasRestantes(this.getCasillasRestantes() + 1);
       return true;

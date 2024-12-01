@@ -149,14 +149,14 @@ class GestorDelJuegoTest {
   void  inputFueraRangoTest(){
 
     //ENTRADAS FUERA DE RANGO ( MAYOR A 7)
-     String input = "8\n5\n10\n";
-     System.setIn(new ByteArrayInputStream(input.getBytes()));
+     String mockInput = "8\n5\n10\n";
+     System.setIn(new ByteArrayInputStream(mockInput.getBytes()));
      GestorDelJuego gestor = new GestorDelJuego();
 
      try {
        gestor.configurarJuego();
        fail("Excepción");
-     } catch (Exception e) {
+     } catch (Exception e) {// Al saltar la excepción no se ha configurado el tablero
        assertNull(gestor.getTablero(), "Tablero deberia ser null");
      }
 
@@ -184,18 +184,18 @@ class GestorDelJuegoTest {
   @Test
   void partidaConMinaTest(){
   //Entrada valida --> ESTALLA MINA
-     String input = "0 0 1\n";
-     System.setIn(new ByteArrayInputStream(input.getBytes()));
-     GestorDelJuego gestor = new GestorDelJuego(1,1,1);
+     String mockInput = "0 0 1\n";
+     System.setIn(new ByteArrayInputStream(mockInput.getBytes()));
+     GestorDelJuego gestor = new GestorDelJuego(1,1,1); //en 0 0 se revela con mina
 
      gestor.empezarJuego();
      assertTrue(gestor.getFinal(), "Debería ser el final del juego");
   }
   @Test
   void ganarPartidaBanderaTest(){
-    //REVELAR CASILLA --> COMPROBAR QUE SE ACABA EL JUEGO
-    String input = "0 0 2\n";
-    System.setIn(new ByteArrayInputStream(input.getBytes()));
+    //Poner bandera en la última casilla para ganar--> COMPROBAR QUE SE ACABA EL JUEGO
+    String mockInput = "0 0 2\n";
+    System.setIn(new ByteArrayInputStream(mockInput.getBytes()));
     GestorDelJuego gestor = new GestorDelJuego(1,1,1);
 
     gestor.empezarJuego();
@@ -204,8 +204,9 @@ class GestorDelJuegoTest {
 
   @Test
   void ganarPartidaRevealTest(){
-    String input = "0 0 1\n";
-    System.setIn(new ByteArrayInputStream(input.getBytes()));
+    //Test que comprueba que el juego funciona al ganar revelando casilla
+    String mockInput = "0 0 1\n";
+    System.setIn(new ByteArrayInputStream(mockInput.getBytes()));
     GestorDelJuego gestor = new GestorDelJuego(1,1,0);
 
     gestor.empezarJuego();
@@ -213,12 +214,12 @@ class GestorDelJuegoTest {
   }
 
   @Test
-  void partidaInputNoValidoTest(){
+  void partidaInputNoValidoTest(){ //Se prueba valores que no son int
     //MOCK con MOCKITO
     Interfaz mockInterfaz = mock(Interfaz.class);
 
-    String input = "x 0 2\n";
-    System.setIn(new ByteArrayInputStream(input.getBytes()));
+    String mockInput = "x 0 2\n";
+    System.setIn(new ByteArrayInputStream(mockInput.getBytes()));
 
 
     GestorDelJuego gestor = new GestorDelJuego(3,2,2);
@@ -235,13 +236,13 @@ class GestorDelJuegoTest {
   }
 
   @Test
-  void partidaMalFormatoTest(){
+  void partidaMalFormatoTest(){ //Se prueba input que no sean 3 caracteres exactamente
 
     //MOCK con MOCKITO
     Interfaz mockInterfaz = mock(Interfaz.class);
     //ENTRADA DE DATOS
-    String input = "0 0 2 0 \n";
-    System.setIn(new ByteArrayInputStream(input.getBytes()));
+    String mockInput = "0 0 2 0 \n";
+    System.setIn(new ByteArrayInputStream(mockInput.getBytes()));
 
     GestorDelJuego gestor = new GestorDelJuego(3,2,2);
     gestor.setInterfaz(mockInterfaz);
@@ -253,7 +254,27 @@ class GestorDelJuegoTest {
     } catch (Exception e) {
       verify(mockInterfaz).mostrarMensaje("Formato incorrecto. Usa: fila columna acción.");
     }
+  }
 
+  @Test
+  void partidaMalFormato1Test() { //Se prueba input que no sean 3 caracteres exactamente
+
+    //MOCK con MOCKITO
+    Interfaz mockInterfaz = mock(Interfaz.class);
+    //ENTRADA DE DATOS
+    String mockInput = "0 0 \n";
+    System.setIn(new ByteArrayInputStream(mockInput.getBytes()));
+
+    GestorDelJuego gestor = new GestorDelJuego(3, 2, 2);
+    gestor.setInterfaz(mockInterfaz);
+
+    //SE EJECUTA EMPEZARJUEGO HASTA QUE SALTA EL ERROR DE MAL FORMATO
+    try {
+      gestor.empezarJuego();
+      fail("Excepción");
+    } catch (Exception e) {
+      verify(mockInterfaz).mostrarMensaje("Formato incorrecto. Usa: fila columna acción.");
+    }
   }
 
 }
