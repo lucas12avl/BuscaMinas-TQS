@@ -73,11 +73,6 @@ public class GestorDelJuego {
   public void setFinalJuego(boolean finalJuego) {
     this.finalJuego = finalJuego;
   }
-
-  public void setHasGanado(boolean hasGanado) {
-    this.hasGanado = hasGanado;
-  }
-
   public void setCasillasRestantes(int casillasRestantes) {
     this.casillasRestantes = casillasRestantes;
   }
@@ -217,12 +212,6 @@ public class GestorDelJuego {
       //Si ponemos una flag --> Se quita esa casilla de casillas restantes
       if(this.getTablero().getCasilla(fila,col).getTieneMina()){
         this.setCasillasRestantes(this.getCasillasRestantes() - 1);
-        if(this.getCasillasRestantes() == getTablero().getTotalMinas()){
-          this.setFinalJuego(true);
-          this.setHasGanado(true);
-          return true;
-        }
-
       }
       //Postcondicion del método de colocar una bandera --> debe mirar si se ha colocado bien la bandera
       assert tablero.getCasilla(fila,col).getTieneBandera() : "Se deberia haber colocado la bandera correctamente";

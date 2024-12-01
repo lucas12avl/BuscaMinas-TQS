@@ -188,11 +188,21 @@ class GestorDelJuegoTest {
      assertTrue(gestor.getFinal(), "Debería ser el final del juego");
   }
   @Test
-  void partidaConMovimientoValidoTest(){
+  void ganarPartidaBanderaTest(){
     //REVELAR CASILLA --> COMPROBAR QUE SE ACABA EL JUEGO
     String input = "0 0 2\n";
     System.setIn(new ByteArrayInputStream(input.getBytes()));
     GestorDelJuego gestor = new GestorDelJuego(1,1,1);
+
+    gestor.empezarJuego();
+    assertTrue(gestor.getHasGanado(),"Deberias ganar");
+  }
+
+  @Test
+  void ganarPartidaRevealTest(){
+    String input = "0 0 1\n";
+    System.setIn(new ByteArrayInputStream(input.getBytes()));
+    GestorDelJuego gestor = new GestorDelJuego(1,1,0);
 
     gestor.empezarJuego();
     assertTrue(gestor.getHasGanado(),"Deberias ganar");
