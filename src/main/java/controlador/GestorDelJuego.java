@@ -152,13 +152,6 @@ public class GestorDelJuego {
 
 
   public boolean realizar_jugada(int fila, int col, int jugada){
-
-    //Diseño por contrato --> Condiciones necesarias para relaizar la jugada
-    assert fila > -1 : "Fila tiene que ser superior o igual a 0";
-    assert fila < tablero.getFilas() : "La fila no puede sobrepasar el tablero";
-    assert col > -1 : "Columna tiene que ser igual o superior a 0";
-    assert col < tablero.getColumnas() : "La columna no puede sobrepasar el tablero";
-
     if(fila < 0 || fila >= tablero.getFilas() || col < 0 || col >= tablero.getColumnas())
       return false;
     else{
@@ -178,33 +171,20 @@ public class GestorDelJuego {
 
   public boolean revelarCelda(int fila, int col){
 
-    //Las precondiciones se evaluan antes del switchcase
-    //Precondición
-    assert tablero.getCasilla(fila,col).getRevelada() : "Casilla ya revelada.";
-
     if(tablero.getCasilla(fila,col).getRevelada())
       return false;
 
     if(tablero.getCasilla(fila,col).getTieneMina()){
       System.out.println("BOOM ha estallado una mina, has perdido.");
       this.setFinalJuego(true);
-      //postcondicion
-      assert tablero.getCasilla(fila,col).getRevelada() : "Deberia revelarse la mina";
       return true;
     }
     tablero.getCasilla(fila,col).setRevelada(true);
     this.setCasillasRestantes(this.getCasillasRestantes() - 1);
-
-    //postcondiciones
-    assert tablero.getCasilla(fila,col).getRevelada() : "Deberia estar revelada";
     return true;
   }
 
   public boolean flagCelda(int fila, int col){
-
-    //Diseño por contrato --> Precondiciones para poner una bandera
-    assert tablero.getCasilla(fila,col).getRevelada() : "Si la casilla está revelada no se puede poner una Bandera.";
-    assert tablero.getCasilla(fila,col).getTieneBandera():"Si la casilla tiene bandera no se puede poner otra bandera.";
 
     if(tablero.getCasilla(fila,col).getRevelada() || tablero.getCasilla(fila,col).getTieneBandera())
       return false;
@@ -214,19 +194,11 @@ public class GestorDelJuego {
       if(this.getTablero().getCasilla(fila,col).getTieneMina()){
         this.setCasillasRestantes(this.getCasillasRestantes() - 1);
       }
-      //Postcondicion del método de colocar una bandera --> debe mirar si se ha colocado bien la bandera
-      assert tablero.getCasilla(fila,col).getTieneBandera() : "Se deberia haber colocado la bandera correctamente";
       return true;
-
     }
-
   }
 
   public boolean removeBandera(int fila, int col) {
-    //Diseño por contrato --> Precondiciones para quitar una badera
-    //Precondiciones
-    assert tablero.getCasilla(fila, col).getRevelada() : " Si la casilla está revelada no se puede quitar una bandera";
-    assert !tablero.getCasilla(fila, col).getTieneBandera() : "NO se puede quitar bandera, no hay ninguna en esta casilla";
 
     if (!tablero.getCasilla(fila, col).getTieneBandera()) {
       return false;
@@ -235,9 +207,6 @@ public class GestorDelJuego {
       //si quitamos la bandera y tenia mina --> Se suma una a las casillas restantes -->
       if(tablero.getCasilla(fila,col).getTieneMina())
         this.setCasillasRestantes(this.getCasillasRestantes() + 1);
-      //Postcondicion del método de remover la bandera
-      assert tablero.getCasilla(fila, col).getTieneBandera() : "Bandera deberia estar eliminada --> Funciona bien la funcion";
-
       return true;
     }
   }

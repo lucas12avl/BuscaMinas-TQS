@@ -94,7 +94,6 @@ class GestorDelJuegoTest {
     //Quitar bandera de posicion no válida
     assertFalse(gestor.realizar_jugada(-1, -1, 3), "No deberia tener bandera, ya que se ha quitado");
 
-    //Quitar bandera de casilla con Mina
   }
 
   @Test
