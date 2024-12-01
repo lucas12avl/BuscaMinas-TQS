@@ -12,6 +12,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.ByteArrayInputStream;
 
 class GestorDelJuegoTest {
+  //STATEMENT COVERAGE AL 100%
+  //DECISION y CONDITION COVERAGE SE CUMPLE EN revelarCelda
+  // --> revelarMovimiento test + detectarMinaTest
+  //MOCKITO EN TESTS DE empezarJuego --> partidaMalFormatoTest + partidaInputNoValidoTest
 
 
   // ######### TESTS RELACIONADOS CON LOS MOVIMIENTOS DEL JUGADOR #########
@@ -74,13 +78,12 @@ class GestorDelJuegoTest {
 
   @Test
   void quitarBanderaTest(){
-    GestorDelJuego gestor = new GestorDelJuego(3, 3, 0);
+    GestorDelJuego gestor = new GestorDelJuego(3, 3, 9);
     Tablero tablero = gestor.getTablero();
 
-    // CASO DONDE SE QUITA LA BANDERA DE UNA CASILLA CON BANDERA
+    // CASO DONDE SE QUITA LA BANDERA DE UNA CASILLA CON BANDERA Y MINA
     gestor.realizar_jugada(0,0,2);
     assertTrue(gestor.realizar_jugada(0, 0, 3), "No deberia tener bandera, ya que se ha quitado");
-
 
     //CASO DONDE SE QUITA UNA BANDERA DONDE NO LA HAY
     assertFalse(gestor.realizar_jugada(2, 2, 3), "No deberia tener bandera");
@@ -90,6 +93,8 @@ class GestorDelJuegoTest {
 
     //Quitar bandera de posicion no válida
     assertFalse(gestor.realizar_jugada(-1, -1, 3), "No deberia tener bandera, ya que se ha quitado");
+
+    //Quitar bandera de casilla con Mina
   }
 
   @Test
@@ -220,7 +225,7 @@ class GestorDelJuegoTest {
     GestorDelJuego gestor = new GestorDelJuego(3,2,2);
     gestor.setInterfaz(mockInterfaz);
 
-    //SE EJECUTA HASTA QUE TE DICE QUE EL INPU CONTIENE DATOS NO VALIDOS
+    //SE EJECUTA EMPEZARJUEGO HASTA QUE TE DICE QUE EL INPUT CONTIENE DATOS NO VALIDOS
     try {
       gestor.empezarJuego();
       fail("Excepción");
@@ -238,11 +243,11 @@ class GestorDelJuegoTest {
     //ENTRADA DE DATOS
     String input = "0 0 2 0 \n";
     System.setIn(new ByteArrayInputStream(input.getBytes()));
-    //CREAMOS EL GETSOR DEL JUEGO
+
     GestorDelJuego gestor = new GestorDelJuego(3,2,2);
     gestor.setInterfaz(mockInterfaz);
 
-    //SE EJECUTA HASTA QUE SALTA EL ERROR DE MAL FORMATO
+    //SE EJECUTA EMPEZARJUEGO HASTA QUE SALTA EL ERROR DE MAL FORMATO
     try {
       gestor.empezarJuego();
       fail("Excepción");

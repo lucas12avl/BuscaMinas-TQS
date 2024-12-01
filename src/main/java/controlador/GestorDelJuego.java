@@ -97,7 +97,7 @@ public class GestorDelJuego {
 
             interfaz.mostrarMensaje("Introduce el número de minas (1-" + (filas * columnas) + "):");
             minas = Integer.parseInt(scanner.nextLine());
-
+            //Comprueba que los datos introducidos sean válidos
             if (filas > 0 && filas <= 7 && columnas > 0 && columnas <= 7
                     && minas > 0 && minas <= filas * columnas) {
                 break;
@@ -125,6 +125,7 @@ public class GestorDelJuego {
       String input = scanner.nextLine();
       String[] parts = input.split(" ");
 
+      //Comprobar datos de entrada + su tratamiento
       if (parts.length == 3) {
         try {
           int fila = Integer.parseInt(parts[0]);
@@ -209,7 +210,7 @@ public class GestorDelJuego {
       return false;
     else{
       tablero.getCasilla(fila,col).setTieneBandera(true);
-      //Si ponemos una flag --> Se quita esa casilla de casillas restantes
+      //Si ponemos una flag --> Se quita esa casilla de casillas restantes si realmente tiene mina
       if(this.getTablero().getCasilla(fila,col).getTieneMina()){
         this.setCasillasRestantes(this.getCasillasRestantes() - 1);
       }
@@ -223,7 +224,6 @@ public class GestorDelJuego {
 
   public boolean removeBandera(int fila, int col) {
     //Diseño por contrato --> Precondiciones para quitar una badera
-    //Falta condicion en el test --> Mirar despues
     //Precondiciones
     assert tablero.getCasilla(fila, col).getRevelada() : " Si la casilla está revelada no se puede quitar una bandera";
     assert !tablero.getCasilla(fila, col).getTieneBandera() : "NO se puede quitar bandera, no hay ninguna en esta casilla";
@@ -232,8 +232,9 @@ public class GestorDelJuego {
       return false;
     } else {
       tablero.getCasilla(fila, col).setTieneBandera(false);
-      //si quitamos la bandera --> Se suma una a las casillas restantes
-      this.setCasillasRestantes(this.getCasillasRestantes() + 1);
+      //si quitamos la bandera y tenia mina --> Se suma una a las casillas restantes -->
+      if(tablero.getCasilla(fila,col).getTieneMina())
+        this.setCasillasRestantes(this.getCasillasRestantes() + 1);
       //Postcondicion del método de remover la bandera
       assert tablero.getCasilla(fila, col).getTieneBandera() : "Bandera deberia estar eliminada --> Funciona bien la funcion";
 
