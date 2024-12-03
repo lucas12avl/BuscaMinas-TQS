@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TableroTest {
 
   /*PROVES DE CAIXA NEGRA*/
-
+  // vamos a hacer que el test iniciarClaseTableroTest() falle en el segundo assert
     @Test
   void iniciarClaseTableroTest(){
 
@@ -15,7 +15,7 @@ class TableroTest {
     int[] posMinas = {0,0}; //da igual, porque no se van a poner minas en este test
     Tablero tablero = new Tablero(2,2,0, new GeneradorAleatorioMock(posMinas)); //valor interior frontera (válido)
     assertEquals(2, tablero.getFilas());
-    assertEquals(2, tablero.getColumnas());
+    assertEquals(3, tablero.getColumnas()); // se ha modificado para que falle i comprobar ci/cd
 
     Tablero tablero2 = new Tablero(1,1,0, new GeneradorAleatorioMock(posMinas)); //valor frontera (válido)
     assertEquals(1, tablero2.getFilas());
