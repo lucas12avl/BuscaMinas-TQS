@@ -35,7 +35,6 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.2</version>
                 <configuration>
-                    <argLine>-da</argLine> <!-- Desactivar las aserciones -->
                 </configuration>
             </plugin>
         </plugins>
