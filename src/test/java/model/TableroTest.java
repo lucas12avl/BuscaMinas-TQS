@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TableroTest {
 
   /*PROVES DE CAIXA NEGRA*/
-  //SIN CAMBIOS
+  //SIN CAMBIOS.
     @Test
   void iniciarClaseTableroTest(){
 
